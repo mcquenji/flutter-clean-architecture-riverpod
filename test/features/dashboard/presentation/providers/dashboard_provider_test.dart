@@ -1,8 +1,8 @@
 //test for filename
 import 'package:dartz/dartz.dart';
 import 'package:flutter_project/features/dashboard/domain/repositories/dashboard_repository.dart';
-import 'package:flutter_project/features/dashboard/presentation/providers/state/dashboard_notifier.dart';
-import 'package:flutter_project/features/dashboard/presentation/providers/state/dashboard_state.dart';
+import 'package:flutter_project/features/dashboard/presentation/providers/dashboard_provider.dart';
+import 'package:flutter_project/features/dashboard/presentation/providers/dashboard_state.dart';
 import 'package:flutter_project/shared/globals.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -76,8 +76,7 @@ void main() {
       when(() => dashboardRepository.fetchProducts(skip: 0)).thenAnswer(
         (invocation) async => Right(ktestPaginatedResponse()),
       );
-      when(() => dashboardRepository.fetchProducts(skip: PRODUCTS_PER_PAGE))
-          .thenAnswer(
+      when(() => dashboardRepository.fetchProducts(skip: PRODUCTS_PER_PAGE)).thenAnswer(
         (invocation) async => Left(ktestAppException),
       );
     },
@@ -120,10 +119,8 @@ void main() {
       when(() => dashboardRepository.fetchProducts(skip: 0)).thenAnswer(
         (invocation) async => Right(ktestPaginatedResponse()),
       );
-      when(() => dashboardRepository.fetchProducts(skip: PRODUCTS_PER_PAGE))
-          .thenAnswer(
-        (invocation) async =>
-            Right(ktestPaginatedResponse(skip: PRODUCTS_PER_PAGE)),
+      when(() => dashboardRepository.fetchProducts(skip: PRODUCTS_PER_PAGE)).thenAnswer(
+        (invocation) async => Right(ktestPaginatedResponse(skip: PRODUCTS_PER_PAGE)),
       );
     },
     actions: (notifier) async {
@@ -165,8 +162,7 @@ void main() {
       'Should fail when error occurs on fetch',
       build: () => DashboardNotifier(dashboardRepository),
       setUp: () {
-        when(() => dashboardRepository.searchProducts(skip: 0, query: ''))
-            .thenAnswer(
+        when(() => dashboardRepository.searchProducts(skip: 0, query: '')).thenAnswer(
           (invocation) async => Left(ktestAppException),
         );
       },
@@ -193,8 +189,7 @@ void main() {
       'Should load list of products on successful fetch',
       build: () => DashboardNotifier(dashboardRepository),
       setUp: () {
-        when(() => dashboardRepository.searchProducts(skip: 0, query: ''))
-            .thenAnswer(
+        when(() => dashboardRepository.searchProducts(skip: 0, query: '')).thenAnswer(
           (invocation) async => Right(ktestPaginatedResponse()),
         );
       },
@@ -218,12 +213,10 @@ void main() {
       'Should have productList of previous fetch when error occurs on second page',
       build: () => DashboardNotifier(dashboardRepository),
       setUp: () {
-        when(() => dashboardRepository.searchProducts(skip: 0, query: ''))
-            .thenAnswer(
+        when(() => dashboardRepository.searchProducts(skip: 0, query: '')).thenAnswer(
           (invocation) async => Right(ktestPaginatedResponse()),
         );
-        when(() => dashboardRepository.searchProducts(
-            skip: PRODUCTS_PER_PAGE, query: '')).thenAnswer(
+        when(() => dashboardRepository.searchProducts(skip: PRODUCTS_PER_PAGE, query: '')).thenAnswer(
           (invocation) async => Left(ktestAppException),
         );
       },
@@ -263,14 +256,11 @@ void main() {
       'Should increment page and append product response to the productList on successive fetch',
       build: () => DashboardNotifier(dashboardRepository),
       setUp: () {
-        when(() => dashboardRepository.searchProducts(skip: 0, query: ''))
-            .thenAnswer(
+        when(() => dashboardRepository.searchProducts(skip: 0, query: '')).thenAnswer(
           (invocation) async => Right(ktestPaginatedResponse()),
         );
-        when(() => dashboardRepository.searchProducts(
-            skip: PRODUCTS_PER_PAGE, query: '')).thenAnswer(
-          (invocation) async =>
-              Right(ktestPaginatedResponse(skip: PRODUCTS_PER_PAGE)),
+        when(() => dashboardRepository.searchProducts(skip: PRODUCTS_PER_PAGE, query: '')).thenAnswer(
+          (invocation) async => Right(ktestPaginatedResponse(skip: PRODUCTS_PER_PAGE)),
         );
       },
       actions: (notifier) async {
@@ -313,8 +303,7 @@ void main() {
       'Should not load list of products when it is already loading while search',
       build: () => DashboardNotifier(dashboardRepository),
       setUp: () {
-        when(() => dashboardRepository.searchProducts(skip: 0, query: ''))
-            .thenAnswer(
+        when(() => dashboardRepository.searchProducts(skip: 0, query: '')).thenAnswer(
           (invocation) async => Right(ktestPaginatedResponse()),
         );
       },

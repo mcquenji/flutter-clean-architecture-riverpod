@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project/features/authentication/presentation/providers/auth_providers.dart';
-import 'package:flutter_project/features/authentication/presentation/providers/state/auth_state.dart';
+import 'package:flutter_project/features/authentication/presentation/providers/auth_provider.dart';
+import 'package:flutter_project/features/authentication/presentation/providers/auth_state.dart';
 import 'package:flutter_project/features/authentication/presentation/widgets/auth_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,10 +13,8 @@ class LoginScreen extends ConsumerWidget {
 
   LoginScreen({Key? key}) : super(key: key);
 
-  final TextEditingController usernameController =
-      TextEditingController(text: 'kminchelle');
-  final TextEditingController passwordController =
-      TextEditingController(text: '0lelplR');
+  final TextEditingController usernameController = TextEditingController(text: 'kminchelle');
+  final TextEditingController passwordController = TextEditingController(text: '0lelplR');
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(authStateNotifierProvider);
@@ -25,11 +23,9 @@ class LoginScreen extends ConsumerWidget {
       ((previous, next) {
         //show Snackbar on failure
         if (next is Failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(next.exception.message.toString())));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.exception.message.toString())));
         } else if (next is Success) {
-          AutoRouter.of(context)
-              .pushAndPopUntil(const DashboardRoute(), predicate: (_) => false);
+          AutoRouter.of(context).pushAndPopUntil(const DashboardRoute(), predicate: (_) => false);
         }
       }),
     );

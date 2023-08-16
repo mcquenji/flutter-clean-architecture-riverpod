@@ -1,4 +1,5 @@
-import 'package:flutter_project/features/dashboard/data/datasource/dashboard_remote_datasource.dart';
+import 'package:flutter_project/features/dashboard/data/datasources/remote_dashboard_datasource.dart';
+import 'package:flutter_project/features/dashboard/data/datasources/dashboard_datasource.dart';
 import 'package:flutter_project/shared/data/remote/network_service.dart';
 import 'package:flutter_project/shared/domain/models/response.dart';
 import 'package:flutter_project/shared/exceptions/http_exception.dart';
@@ -18,12 +19,9 @@ void main() async {
   group(
     'Dahboard Remote Datasource Test\n',
     () {
-      test(
-          'should return PaginatedResponse on success and the data is in valid format',
-          () async {
+      test('should return PaginatedResponse on success and the data is in valid format', () async {
         // arrange
-        when(() => mockNetworkService.get(any(),
-            queryParameters: any(named: 'queryParameters'))).thenAnswer(
+        when(() => mockNetworkService.get(any(), queryParameters: any(named: 'queryParameters'))).thenAnswer(
           (_) async => Response(
             statusCode: 200,
             statusMessage: '',
@@ -37,12 +35,9 @@ void main() async {
         // assert
         expect(resp.isRight(), true);
       });
-      test(
-          'should return PaginatedResponse on success and the data is not in valid format',
-          () async {
+      test('should return PaginatedResponse on success and the data is not in valid format', () async {
         // arrange
-        when(() => mockNetworkService.get(any(),
-            queryParameters: any(named: 'queryParameters'))).thenAnswer(
+        when(() => mockNetworkService.get(any(), queryParameters: any(named: 'queryParameters'))).thenAnswer(
           (_) async => Response(
             statusCode: 200,
             statusMessage: '',
@@ -56,11 +51,9 @@ void main() async {
         // assert
         expect(resp.isRight(), true);
       });
-      test('should return AppException on success but the data is null',
-          () async {
+      test('should return AppException on success but the data is null', () async {
         // arrange
-        when(() => mockNetworkService.get(any(),
-            queryParameters: any(named: 'queryParameters'))).thenAnswer(
+        when(() => mockNetworkService.get(any(), queryParameters: any(named: 'queryParameters'))).thenAnswer(
           (_) async => Response(
             statusCode: 200,
             statusMessage: '',
@@ -76,8 +69,7 @@ void main() async {
       });
       test('should return AppException on failure', () async {
         // arrange
-        when(() => mockNetworkService.get(any(),
-            queryParameters: any(named: 'queryParameters'))).thenAnswer(
+        when(() => mockNetworkService.get(any(), queryParameters: any(named: 'queryParameters'))).thenAnswer(
           (_) async => ktestAppException.toLeft,
         );
 
@@ -92,12 +84,9 @@ void main() async {
   group(
     'Dahboard Remote Datasource Test(Search)\n',
     () {
-      test(
-          'Should return PaginatedResponse on success and the data is in valid format',
-          () async {
+      test('Should return PaginatedResponse on success and the data is in valid format', () async {
         // arrange
-        when(() => mockNetworkService.get(any(),
-            queryParameters: any(named: 'queryParameters'))).thenAnswer(
+        when(() => mockNetworkService.get(any(), queryParameters: any(named: 'queryParameters'))).thenAnswer(
           (_) async => Response(
             statusCode: 200,
             statusMessage: '',
@@ -106,18 +95,14 @@ void main() async {
         );
 
         // act
-        final resp = await dashboardDatasource.searchPaginatedProducts(
-            skip: 0, query: '');
+        final resp = await dashboardDatasource.searchPaginatedProducts(skip: 0, query: '');
 
         // assert
         expect(resp.isRight(), true);
       });
-      test(
-          'should return PaginatedResponse on success and the data is not in valid format',
-          () async {
+      test('should return PaginatedResponse on success and the data is not in valid format', () async {
         // arrange
-        when(() => mockNetworkService.get(any(),
-            queryParameters: any(named: 'queryParameters'))).thenAnswer(
+        when(() => mockNetworkService.get(any(), queryParameters: any(named: 'queryParameters'))).thenAnswer(
           (_) async => Response(
             statusCode: 200,
             statusMessage: '',
@@ -126,17 +111,14 @@ void main() async {
         );
 
         // act
-        final resp = await dashboardDatasource.searchPaginatedProducts(
-            skip: 0, query: '');
+        final resp = await dashboardDatasource.searchPaginatedProducts(skip: 0, query: '');
 
         // assert
         expect(resp.isRight(), true);
       });
-      test('should return AppException on success but the data is null',
-          () async {
+      test('should return AppException on success but the data is null', () async {
         // arrange
-        when(() => mockNetworkService.get(any(),
-            queryParameters: any(named: 'queryParameters'))).thenAnswer(
+        when(() => mockNetworkService.get(any(), queryParameters: any(named: 'queryParameters'))).thenAnswer(
           (_) async => Response(
             statusCode: 200,
             statusMessage: '',
@@ -145,22 +127,19 @@ void main() async {
         );
 
         // act
-        final resp = await dashboardDatasource.searchPaginatedProducts(
-            skip: 0, query: '');
+        final resp = await dashboardDatasource.searchPaginatedProducts(skip: 0, query: '');
 
         // assert
         expect(resp.isLeft(), true);
       });
       test('should return AppException on failure', () async {
         // arrange
-        when(() => mockNetworkService.get(any(),
-            queryParameters: any(named: 'queryParameters'))).thenAnswer(
+        when(() => mockNetworkService.get(any(), queryParameters: any(named: 'queryParameters'))).thenAnswer(
           (_) async => ktestAppException.toLeft,
         );
 
         // act
-        final resp = await dashboardDatasource.searchPaginatedProducts(
-            skip: 0, query: '');
+        final resp = await dashboardDatasource.searchPaginatedProducts(skip: 0, query: '');
 
         // assert
         expect(resp.isLeft(), true);

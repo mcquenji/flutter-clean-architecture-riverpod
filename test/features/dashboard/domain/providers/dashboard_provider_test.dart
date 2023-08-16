@@ -1,4 +1,4 @@
-import 'package:flutter_project/features/dashboard/data/datasource/dashboard_remote_datasource.dart';
+import 'package:flutter_project/features/dashboard/data/datasources/dashboard_datasource.dart';
 import 'package:flutter_project/features/dashboard/domain/providers/dashboard_providers.dart';
 import 'package:flutter_project/features/dashboard/domain/repositories/dashboard_repository.dart';
 import 'package:flutter_project/shared/domain/providers/dio_network_service_provider.dart';
@@ -13,10 +13,8 @@ void main() {
   setUpAll(
     () {
       networkService = providerContainer.read(netwokServiceProvider);
-      dashboardDataSource =
-          providerContainer.read(dashboardDatasourceProvider(networkService));
-      dashboardRespository =
-          providerContainer.read(dashboardRepositoryProvider);
+      dashboardDataSource = providerContainer.read(dashboardDatasourceProvider(networkService));
+      dashboardRespository = providerContainer.read(dashboardRepositoryProvider);
     },
   );
   test('dashboardDatasourceProvider is a DashboardDatasource', () {

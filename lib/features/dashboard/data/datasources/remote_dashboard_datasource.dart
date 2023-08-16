@@ -3,21 +3,14 @@ import 'package:flutter_project/shared/data/remote/remote.dart';
 import 'package:flutter_project/shared/domain/models/paginated_response.dart';
 import 'package:flutter_project/shared/exceptions/http_exception.dart';
 import 'package:flutter_project/shared/globals.dart';
-
-abstract class DashboardDatasource {
-  Future<Either<AppException, PaginatedResponse>> fetchPaginatedProducts(
-      {required int skip});
-  Future<Either<AppException, PaginatedResponse>> searchPaginatedProducts(
-      {required int skip, required String query});
-}
+import 'dashboard_datasource.dart';
 
 class DashboardRemoteDatasource extends DashboardDatasource {
   final NetworkService networkService;
   DashboardRemoteDatasource(this.networkService);
 
   @override
-  Future<Either<AppException, PaginatedResponse>> fetchPaginatedProducts(
-      {required int skip}) async {
+  Future<Either<AppException, PaginatedResponse>> fetchPaginatedProducts({required int skip}) async {
     final response = await networkService.get(
       '/products',
       queryParameters: {
@@ -39,16 +32,14 @@ class DashboardRemoteDatasource extends DashboardDatasource {
             ),
           );
         }
-        final paginatedResponse =
-            PaginatedResponse.fromJson(jsonData, jsonData['products'] ?? []);
+        final paginatedResponse = PaginatedResponse.fromJson(jsonData, jsonData['products'] ?? []);
         return Right(paginatedResponse);
       },
     );
   }
 
   @override
-  Future<Either<AppException, PaginatedResponse>> searchPaginatedProducts(
-      {required int skip, required String query}) async {
+  Future<Either<AppException, PaginatedResponse>> searchPaginatedProducts({required int skip, required String query}) async {
     final response = await networkService.get(
       '/products/search?q=$query',
       queryParameters: {
@@ -70,8 +61,7 @@ class DashboardRemoteDatasource extends DashboardDatasource {
             ),
           );
         }
-        final paginatedResponse =
-            PaginatedResponse.fromJson(jsonData, jsonData['products'] ?? []);
+        final paginatedResponse = PaginatedResponse.fromJson(jsonData, jsonData['products'] ?? []);
         return Right(paginatedResponse);
       },
     );

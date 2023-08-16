@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_project/features/authentication/data/datasource/auth_remote_data_source.dart';
+import 'package:flutter_project/features/authentication/data/datasources/remote_auth_datasource.dart';
 import 'package:flutter_project/shared/data/remote/remote.dart';
 import 'package:flutter_project/shared/domain/models/response.dart';
 import 'package:flutter_project/shared/exceptions/http_exception.dart';
@@ -24,15 +24,13 @@ void main() {
         'login user returns UserModel on success',
         () async {
           // arrange
-          when(() => mockNetworkService.post(any(), data: any(named: 'data')))
-              .thenAnswer(
+          when(() => mockNetworkService.post(any(), data: any(named: 'data'))).thenAnswer(
             (_) async => Right<AppException, Response>(
               Response(statusCode: 200, data: ktestUserFromMap.toJson()),
             ),
           );
           // act
-          final response =
-              await loginUserRemoteDataSource.loginUser(user: ktestUserFromMap);
+          final response = await loginUserRemoteDataSource.loginUser(user: ktestUserFromMap);
 
           // assert
           expect(response.isRight(), true);
@@ -47,8 +45,7 @@ void main() {
             (_) async => Left(ktestAppException),
           );
 
-          final response =
-              await loginUserRemoteDataSource.loginUser(user: ktestUser);
+          final response = await loginUserRemoteDataSource.loginUser(user: ktestUser);
 
           expect(response.isLeft(), true);
         },
@@ -62,8 +59,7 @@ void main() {
             (_) => Exception(),
           );
 
-          final response =
-              await loginUserRemoteDataSource.loginUser(user: ktestUser);
+          final response = await loginUserRemoteDataSource.loginUser(user: ktestUser);
 
           expect(response.isLeft(), true);
         },

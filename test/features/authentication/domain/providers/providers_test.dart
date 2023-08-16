@@ -1,4 +1,4 @@
-import 'package:flutter_project/features/authentication/data/datasource/auth_remote_data_source.dart';
+import 'package:flutter_project/features/authentication/data/datasources/auth_datasource.dart';
 import 'package:flutter_project/features/authentication/domain/providers/login_provider.dart';
 import 'package:flutter_project/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:flutter_project/shared/domain/providers/dio_network_service_provider.dart';
@@ -13,8 +13,7 @@ void main() {
   setUpAll(
     () {
       networkService = providerContainer.read(netwokServiceProvider);
-      dataSource =
-          providerContainer.read(authdataSourceProvider(networkService));
+      dataSource = providerContainer.read(authdataSourceProvider(networkService));
       authRepository = providerContainer.read(authRepositoryProvider);
     },
   );

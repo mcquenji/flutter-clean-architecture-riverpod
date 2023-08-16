@@ -1,9 +1,10 @@
 //test for filename
 import 'package:dartz/dartz.dart';
-import 'package:flutter_project/features/dashboard/data/datasource/dashboard_remote_datasource.dart';
+import 'package:flutter_project/features/dashboard/data/datasources/remote_dashboard_datasource.dart';
 import 'package:flutter_project/features/dashboard/data/repositories/dashboard_repository.dart';
 import 'package:flutter_project/features/dashboard/domain/repositories/dashboard_repository.dart';
 import 'package:flutter_project/shared/domain/models/paginated_response.dart';
+import 'package:flutter_project/features/dashboard/data/datasources/dashboard_datasource.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -20,8 +21,7 @@ void main() {
   group('Dashboard Repository Test\n', () {
     test('Should return PaginatedResponse on success', () async {
       // arrange
-      when(() => dashboardDatasource.fetchPaginatedProducts(
-          skip: any(named: 'skip'))).thenAnswer(
+      when(() => dashboardDatasource.fetchPaginatedProducts(skip: any(named: 'skip'))).thenAnswer(
         (_) async => Right(PaginatedResponse.fromJson({}, [])),
       );
 
@@ -35,8 +35,7 @@ void main() {
       'Should return AppException on failure',
       () async {
         // arrange
-        when(() => dashboardDatasource.fetchPaginatedProducts(
-            skip: any(named: 'skip'))).thenAnswer(
+        when(() => dashboardDatasource.fetchPaginatedProducts(skip: any(named: 'skip'))).thenAnswer(
           (_) async => Left(ktestAppException),
         );
 
@@ -51,14 +50,12 @@ void main() {
   group('Dashboard Repository Test(Search)\n', () {
     test('Should return PaginatedResponse on success', () async {
       // arrange
-      when(() => dashboardDatasource.searchPaginatedProducts(
-          skip: any(named: 'skip'), query: any(named: 'query'))).thenAnswer(
+      when(() => dashboardDatasource.searchPaginatedProducts(skip: any(named: 'skip'), query: any(named: 'query'))).thenAnswer(
         (_) async => Right(PaginatedResponse.fromJson({}, [])),
       );
 
       // assert
-      final response =
-          await dashboardRepository.searchProducts(skip: 0, query: '');
+      final response = await dashboardRepository.searchProducts(skip: 0, query: '');
 
       // act
       expect(response.isRight(), true);
@@ -67,14 +64,12 @@ void main() {
       'Should return AppException on failure',
       () async {
         // arrange
-        when(() => dashboardDatasource.searchPaginatedProducts(
-            skip: any(named: 'skip'), query: any(named: 'query'))).thenAnswer(
+        when(() => dashboardDatasource.searchPaginatedProducts(skip: any(named: 'skip'), query: any(named: 'query'))).thenAnswer(
           (_) async => Left(ktestAppException),
         );
 
         // assert
-        final response =
-            await dashboardRepository.searchProducts(skip: 1, query: '');
+        final response = await dashboardRepository.searchProducts(skip: 1, query: '');
 
         // act
         expect(response.isLeft(), true);

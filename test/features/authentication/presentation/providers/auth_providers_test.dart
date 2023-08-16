@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_project/features/authentication/domain/repositories/auth_repository.dart';
-import 'package:flutter_project/features/authentication/presentation/providers/state/auth_notifier.dart';
-import 'package:flutter_project/features/authentication/presentation/providers/state/auth_state.dart';
+import 'package:flutter_project/features/authentication/presentation/providers/auth_provider.dart';
+import 'package:flutter_project/features/authentication/presentation/providers/auth_state.dart';
 import 'package:flutter_project/services/user_cache_service/domain/repositories/user_cache_repository.dart';
 import 'package:flutter_project/shared/domain/models/models.dart';
 import 'package:flutter_project/shared/exceptions/http_exception.dart';
@@ -45,11 +45,9 @@ void main() {
         setUp: () {
           when(
             () => authRepository.loginUser(user: any(named: 'user')),
-          ).thenAnswer(
-              (invocation) async => Right<AppException, User>(ktestUser));
+          ).thenAnswer((invocation) async => Right<AppException, User>(ktestUser));
 
-          when(() => userRepository.saveUser(user: any(named: 'user')))
-              .thenAnswer(
+          when(() => userRepository.saveUser(user: any(named: 'user'))).thenAnswer(
             (invocation) async => true,
           );
         },
@@ -91,8 +89,7 @@ void main() {
           // arrange
           when(
             () => authRepository.loginUser(user: any(named: 'user')),
-          ).thenAnswer((invocation) async =>
-              Left<AppException, User>(ktestAppException));
+          ).thenAnswer((invocation) async => Left<AppException, User>(ktestAppException));
 
           // assert
           await authNotifier.loginUser('', '');

@@ -2,10 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_project/shared/data/remote/remote.dart';
 import 'package:flutter_project/shared/domain/models/models.dart';
 import 'package:flutter_project/shared/exceptions/http_exception.dart';
-
-abstract class LoginUserDataSource {
-  Future<Either<AppException, User>> loginUser({required User user});
-}
+import 'auth_datasource.dart';
 
 class LoginUserRemoteDataSource implements LoginUserDataSource {
   final NetworkService networkService;

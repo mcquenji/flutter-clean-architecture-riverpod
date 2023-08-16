@@ -1,4 +1,4 @@
-import 'package:flutter_project/features/dashboard/presentation/providers/state/dashboard_state.dart';
+import 'package:flutter_project/features/dashboard/presentation/providers/dashboard_state.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -6,8 +6,7 @@ void main() {
     test('Should update concrete state', () {
       DashboardState dashboardState = const DashboardState();
 
-      dashboardState =
-          dashboardState.copyWith(message: 'DashboardConcreteState.loading');
+      dashboardState = dashboardState.copyWith(message: 'DashboardConcreteState.loading');
 
       expect(dashboardState.message, equals('DashboardConcreteState.loading'));
     });

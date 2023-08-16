@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_project/features/authentication/data/datasource/auth_remote_data_source.dart';
+import 'package:flutter_project/features/authentication/data/datasources/auth_datasource.dart';
 import 'package:flutter_project/features/authentication/data/repositories/atuhentication_repository_impl.dart';
 import 'package:flutter_project/features/authentication/domain/repositories/auth_repository.dart';
 import 'package:flutter_project/shared/domain/models/models.dart';
@@ -16,8 +16,7 @@ void main() {
     () {
       registerFallbackValue(ktestUser);
       mockLoginUserDataSource = MockLoginUserDataSource();
-      authenticationRepository =
-          AuthenticationRepositoryImpl(mockLoginUserDataSource);
+      authenticationRepository = AuthenticationRepositoryImpl(mockLoginUserDataSource);
     },
   );
   group(
@@ -32,8 +31,7 @@ void main() {
             (_) async => Right<AppException, User>(ktestUser),
           );
 
-          final response =
-              await authenticationRepository.loginUser(user: ktestUser);
+          final response = await authenticationRepository.loginUser(user: ktestUser);
 
           expect(response.isRight(), true);
         },
@@ -47,8 +45,7 @@ void main() {
             (_) async => Left<AppException, User>(ktestAppException),
           );
 
-          final response =
-              await authenticationRepository.loginUser(user: ktestUser);
+          final response = await authenticationRepository.loginUser(user: ktestUser);
 
           expect(response.isLeft(), true);
         },
